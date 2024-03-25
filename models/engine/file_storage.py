@@ -16,7 +16,7 @@ class FileStorage:
         else:
             for k, v in FileStorage.__objects.items():
                 if v.__class__ == cls:
-                    r[k] == v
+                    r[k] = v
         return r
 
     def new(self, obj):
