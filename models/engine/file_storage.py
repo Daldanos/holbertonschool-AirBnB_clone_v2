@@ -63,6 +63,5 @@ class FileStorage:
             for i in FileStorage.__objects.keys():
                 if FileStorage.__objects[i] == obj:
                     to_del = i
-                    break
             if to_del is not None:
                 del FileStorage.__objects[to_del]
