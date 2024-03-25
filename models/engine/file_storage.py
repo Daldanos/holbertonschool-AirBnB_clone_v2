@@ -57,6 +57,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        """ Deletes stuff """
         to_del = None
         if obj is not None and obj in FileStorage.__objects:
             for i in FileStorage.__objects.keys():
