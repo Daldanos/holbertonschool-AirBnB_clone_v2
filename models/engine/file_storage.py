@@ -56,6 +56,7 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
+    @publicinsntance
     def delete(self, obj=None):
         """ Deletes stuff """
         to_del = None
