@@ -17,16 +17,16 @@ class DBStorage:
         host = os.getenv("HBNB_MYSQL_HOST")
         database = os.getenv("HBNB_MYSQL_DB")
 
-        self.__engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}:3306/{database}", pool_pre_ping=True)
+        DBStorage.__engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}:3306/{database}", pool_pre_ping=True)
 
         if os.getenv("HBNB_ENV") == "test":
-            Base.metadata.drop_all(self.__engine)
+            Base.metadata.drop_all(DBStorage.__engine)
 
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         
-        lst = self.__session.query(cls).all()
+        lst = DBStorage.__session.query(cls).all()
         r = {}
         for obj in lst:
             r[obj.__class__.__name__ + "." + obj.id] = obj
@@ -35,12 +35,12 @@ class DBStorage:
 
     def new(self, obj):
         """Adds new object to database"""
-        self.__session.add(obj)
+        DBStorage.__session.add(obj)
         
 
     def save(self):
         """Saves storage dictionary to file"""
-        self.__session.commit()
+        DBStorage.__session.commit()
 
     def reload(self):
         """Reload database"""
@@ -52,12 +52,12 @@ class DBStorage:
         from models.city import City
         from models.amenity import Amenity
         from models.review import Review
-        Base.metadata.create_all(self.__engine)
-        session_class = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(session_class)
+        Base.metadata.create_all(DBStorage.__engine)
+        session_class = sessionmaker(bind=DBStorage.__engine, expire_on_commit=False)
+        DBStorage.__session = scoped_session(session_class)
     
     def delete(self, obj=None):
         """ Deletes object from database"""
         if obj:
-            self.__session.delete(obj)
+            DBStorage.__session.delete(obj)
 
