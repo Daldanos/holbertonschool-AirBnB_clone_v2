@@ -15,7 +15,7 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         from models import storage
-        cities2 = models.storage.all(City)
+        cities2 = storage.all(City)
         r = []
         for c in cities2:
             if c.state_id == self.id:
