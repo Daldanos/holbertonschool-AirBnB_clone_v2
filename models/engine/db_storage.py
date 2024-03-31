@@ -29,7 +29,7 @@ class DBStorage:
         lst = self.__session.query(cls).all()
         r = {}
         for obj in lst:
-            r[obj.__class__.__name__ + "." + obj.id] = obj
+            r[obj.__class__.__name__ + "." + str(obj.id)] = obj
         return r
 
 
