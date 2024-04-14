@@ -24,7 +24,7 @@ def hnbn():
 def ctext(text):
     """display c text"""
     ret_text = text.replace("_", " ")
-    return "C{}".format(ret_text)
+    return "C {}".format(ret_text)
 
 
 if __name__ == "__main__":
