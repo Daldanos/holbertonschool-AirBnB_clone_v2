@@ -22,21 +22,18 @@ class DBStorage:
         if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
-
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        
+
         lst = self.__session.query(cls).all()
         r = {}
         for obj in lst:
             r[obj.__class__.__name__ + "." + str(obj.id)] = obj
         return r
 
-
     def new(self, obj):
         """Adds new object to database"""
         self.__session.add(obj)
-        
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -55,9 +52,12 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_class = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session_class)
-    
+
     def delete(self, obj=None):
         """ Deletes object from database"""
         if obj:
             self.__session.delete(obj)
 
+    def close(self):
+        """close self"""
+        self.__session.close()

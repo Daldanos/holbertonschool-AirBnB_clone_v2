@@ -66,3 +66,7 @@ class FileStorage:
                     break
             if to_del is not None:
                 del FileStorage.__objects[to_del]
+
+    def close(self):
+        """self reload"""
+        self.reload()
