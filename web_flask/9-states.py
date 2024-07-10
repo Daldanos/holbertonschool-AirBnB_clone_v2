@@ -1,28 +1,29 @@
-#!/usr/bin/python3
-"""
-0. Hello Flask!
-"""
-
 from flask import Flask, render_template
-from models import *
-from modes.__init__ import storage
+from models import storage
 
 app = Flask(__name__)
 
 
-@app.route("/states", strict_slashes=False)
-@app.route("/states/<state_id>", strict_slashes=False)
-def states(state_id=None):
-    """display Hello HBNB!"""
-    states = storage.all(State)
-    return render_template("9-states.html", states=states)
-
-
 @app.teardown_appcontext
-def teardowndb(exception):
-    """close storage"""
+def teardown_db(exception):
     storage.close()
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/states', strict_slashes=False)
+def display_states():
+    states = storage.all('State').values()
+    return render_template('9-states.html', states=states)
+
+
+@app.route('/states/<id>', strict_slashes=False)
+def display_cities(id):
+    state = storage.get('State', id)
+    if state:
+        cities = state.cities
+        return render_template('9-states.html', state=state, cities=cities)
+    else:
+        return render_template('9-states.html', not_found=True)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
